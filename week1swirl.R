@@ -477,7 +477,7 @@ Summer and Fall              Year Round
 24                       5
 #str() is the best one
 str(plants)
-'data.frame':	5166 obs. of  10 variables:
+data.frame':	5166 obs. of  10 variables:
  $ Scientific_Name     : Factor w/ 5166 levels "Abelmoschus",..: 1 2 3 4 5 6 7 8 9 10 ...
  $ Duration            : Factor w/ 8 levels "Annual","Annual, Biennial",..: NA 4 NA 7 7 NA 1 NA 7 7 ...
  $ Active_Growth_Period: Factor w/ 8 levels "Fall, Winter and Spring",..: NA NA NA 4 NA NA NA NA 4 NA ...
@@ -524,6 +524,31 @@ my_pois
 cm <- colMeans(my_pois)
 #plot a histogram of cm
 hist(cm)
+
+##Base Graphics
+data(cars)
+plot(cars) #lots of defaults in using plot
+plot(x = cars$dist, y = cars$speed)
+plot(x = cars$speed, y = cars$dist, xlab = "Speed") # change xlabel to speed
+plot(cars, main = "My Plot") #title My Plot
+plot(cars, col = 2) #change pen color to red (which is 2)
+#Plot cars while limiting the x-axis to 10 through 15
+plot(cars, xlim = c(10, 15))
+plot(cars, pch = 2)#change symbols to triangles
+data(mtcars)
+#boxplot(), like many R functions, also takes a "formula" argument, generally an expression with a tilde ("~") which
+#indicates the relationship between the input variables. This allows you to enter something like mpg ~ cyl to plot the
+#relationship between cyl (number of cylinders) on the x-axis and mpg (miles per gallon) on the y-axis.
+boxplot(formula = mpg ~ cyl, data = mtcars)
+hist(mtcars$mpg)#histogram
+
+
+
+
+
+
+
+
 
 
 
