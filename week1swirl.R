@@ -432,8 +432,98 @@ $`6`
    0.00    0.00    0.00   11.30    1.25  157.00
 
 
+##Looking at data
+# using plant data table
+#get the dimensions, number of rows(observations), number of columns(variables)
+dim(plants) 
+[1] 5166   10
+nrow(plants)
+[1] 5166
+ncol(plants)
+[1] 10
+object.size(plants)
+686080 bytes
+names(plants)
+[1] "Scientific_Name"      "Duration"             "Active_Growth_Period" "Foliage_Color"        "pH_Min"               "pH_Max"              
+[7] "Precip_Min"           "Precip_Max"           "Shade_Tolerance"      "Temp_Min_F"
+head(plants)
+Scientific_Name          Duration Active_Growth_Period Foliage_Color pH_Min pH_Max Precip_Min Precip_Max Shade_Tolerance Temp_Min_F
+1                  Abelmoschus              <NA>                 <NA>          <NA>     NA     NA         NA         NA            <NA>         NA
+2       Abelmoschus esculentus Annual, Perennial                 <NA>          <NA>     NA     NA         NA         NA            <NA>         NA
+3                        Abies              <NA>                 <NA>          <NA>     NA     NA         NA         NA            <NA>         NA
+4               Abies balsamea         Perennial    Spring and Summer         Green      4      6         13         60        Tolerant        -43
+5 Abies balsamea var. balsamea         Perennial                 <NA>          <NA>     NA     NA         NA         NA            <NA>         NA
+6                     Abutilon              <NA>                 <NA>          <NA>     NA     NA         NA         NA            <NA>         NA
+#view the first 10 rows of data
+head(plants, 10)
+#view the last rows of plants
+tail(plants)
+#get a better feel for how each variable is distributed and how much of the dataset is missing
+summary(plants)
+Scientific_Name              Duration              Active_Growth_Period      Foliage_Color      pH_Min          pH_Max      
+Abelmoschus                 :   1   Perennial        :3031   Spring and Summer   : 447      Dark Green  :  82   Min.   :3.000   Min.   : 5.100  
+Abelmoschus esculentus      :   1   Annual           : 682   Spring              : 144      Gray-Green  :  25   1st Qu.:4.500   1st Qu.: 7.000  
+Abies                       :   1   Annual, Perennial: 179   Spring, Summer, Fall:  95      Green       : 692   Median :5.000   Median : 7.300  
+Abies balsamea              :   1   Annual, Biennial :  95   Summer              :  92      Red         :   4   Mean   :4.997   Mean   : 7.344  
+Abies balsamea var. balsamea:   1   Biennial         :  57   Summer and Fall     :  24      White-Gray  :   9   3rd Qu.:5.500   3rd Qu.: 7.800  
+Abutilon                    :   1   (Other)          :  92   (Other)             :  30      Yellow-Green:  20   Max.   :7.000   Max.   :10.000  
+(Other)                     :5160   NA's             :1030   NA's                :4334      NA's        :4334   NA's   :4327    NA's   :4327 
+...
+#see how many times each value actually occurs in the data
+table(plants$Active_Growth_Period)
+Fall, Winter and Spring                  Spring         Spring and Fall       Spring and Summer    Spring, Summer, Fall                  Summer 
+                     15                     144                      10                     447                      95                      92 
+Summer and Fall              Year Round 
+24                       5
+#str() is the best one
+str(plants)
+'data.frame':	5166 obs. of  10 variables:
+ $ Scientific_Name     : Factor w/ 5166 levels "Abelmoschus",..: 1 2 3 4 5 6 7 8 9 10 ...
+ $ Duration            : Factor w/ 8 levels "Annual","Annual, Biennial",..: NA 4 NA 7 7 NA 1 NA 7 7 ...
+ $ Active_Growth_Period: Factor w/ 8 levels "Fall, Winter and Spring",..: NA NA NA 4 NA NA NA NA 4 NA ...
+ $ Foliage_Color       : Factor w/ 6 levels "Dark Green","Gray-Green",..: NA NA NA 3 NA NA NA NA 3 NA ...
+ $ pH_Min              : num  NA NA NA 4 NA NA NA NA 7 NA ...
+ $ pH_Max              : num  NA NA NA 6 NA NA NA NA 8.5 NA ...
+ $ Precip_Min          : int  NA NA NA 13 NA NA NA NA 4 NA ...
+ $ Precip_Max          : int  NA NA NA 60 NA NA NA NA 20 NA ...
+ $ Shade_Tolerance     : Factor w/ 3 levels "Intermediate",..: NA NA NA 3 NA NA NA NA 2 NA ...
+ $ Temp_Min_F          : int  NA NA NA -43 NA NA NA NA -13 NA ...
 
 
+## Simulation
+#simulate rolling four six-sided dice
+sample(1:6, 4, replace = TRUE)
+[1] 4 3 5 1
+#randomly select four numbers between 1 and 6, WITH replacement. Sampling with replacement simply means that
+#each number is "replaced" after it is selected, so that the same number can show up more than once
+sample(1:6, 4, replace = TRUE)
+[1] 6 2 6 6
+#The sample() function can also be used to permute, or rearrange, the elements of a vector. For example, 
+#try sample(LETTERS) to permute all 26 letters of the English alphabet
+sample(LETTERS)
+ [1] "Y" "P" "X" "I" "O" "L" "J" "Q" "S" "A" "E" "G" "D" "K" "N" "W" "C" "V" "F" "M" "Z" "B" "U" "T" "R" "H"
+#simulate 100 flips of an unfair two-sided coin. This particular coin has a 0.3 probability of landing 
+#'tails' and a 0.7 probability of landing 'heads'
+flips <- sample(c(0,1), 100, replace = TRUE, prob = c(0.3, 0.7))
+#request 100 observations, each of size 1, with success probability of 0.7
+rbinom(1, size = 100, prob = 0.7)
+#generate 10 random numbers from a standard normal distribution
+rnorm(10)
+#Generate 5 random values from a Poisson distribution with mean 10
+rpois(5, 10)
+my_pois
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13] [,14] [,15] [,16]
+[1,]    7    8   12    7   13   12   15   14    7     3    10    14    10    10     7    12
+[2,]    6   12   17   14   10    8   10    5   10     8    14     9    11     8    14     9
+[3,]    8    7   11   11    9    9    9   17   12     7     4    15     5     8    19    10
+[4,]   12   11   12    3    8   13   10   10    7    11     8    17    10    10     3     9
+...
+#created a matrix, each column of which contains 5 random numbers generated
+#from a Poisson distribution with mean 10
+#find the mean of each column
+cm <- colMeans(my_pois)
+#plot a histogram of cm
+hist(cm)
 
 
 
